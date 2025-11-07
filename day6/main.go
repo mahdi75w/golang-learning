@@ -12,6 +12,27 @@ func init() {
 	numberOfDay = 6
 }
 
+type sample_new_variable func(int, int) int
+
+type user struct {
+	name string
+	age  int
+}
+
+func (u user) SayHello() string { //its like func sayhello (u user) string {}
+	return "Hello " + u.name
+}
+
+func (u *user) increase_age() {
+	u.age++
+	myname.Println("happy birthdate, your age is", u.age)
+}
+
+func (u user) fake_increase_age() {
+	u.age++
+	myname.Println("happy birthdate, your age is", u.age)
+}
+
 func main() {
 	myname.Println("Day ", numberOfDay)
 	package1.SayHello()
@@ -27,6 +48,26 @@ func main() {
 	another_example_of_copy()
 	range_in_array()
 	clear_slice()
+
+	defaine_variadic_function(1, 5, 9)
+	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	defaine_variadic_function(numbers...)
+
+	work_with_map()
+	sample(5, 6, add)
+	sample(5, 6, subtraction)
+
+	mahdi := user{name: "Mahdi", age: 25}
+	myname.Println(mahdi.SayHello())
+	myname.Println("current age is ", mahdi.age)
+	mahdi.fake_increase_age()
+	myname.Println("current age is ", mahdi.age)
+	mahdi.increase_age()
+	myname.Println("current age is ", mahdi.age)
+	b := 11
+	work_with_pointer(10, &b)
+	myname.Println(b)
+
 }
 
 func defaine_Array() {
@@ -38,12 +79,12 @@ func defaine_Array() {
 }
 
 func calculate_len_of_array() {
-	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	numbers := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	myname.Println(len(numbers))
 }
 
 func print_all_of_index_in_array() {
-	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	numbers := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	for index := 0; index < len(numbers); index++ {
 		myname.Println(numbers[index])
 	}
@@ -100,4 +141,45 @@ func clear_slice() {
 	myname.Println(numbers)
 	clear(numbers)
 	myname.Println(numbers)
+}
+func defaine_variadic_function(numbers ...int) {
+	var sum int
+	for _, number := range numbers {
+		sum += number
+	}
+	myname.Println(sum)
+}
+func work_with_map() {
+	numbers := map[string]int{"one": 1, "two": 2, "three": 3}
+	myname.Println(numbers)
+
+	delete(numbers, "one")
+	numbers["four"] = 4
+
+	for key, value := range numbers {
+		myname.Println(key, value)
+	}
+
+	value, ok := numbers["x"] // check exist key in map
+	myname.Println(value, ok)
+	clear(numbers)
+}
+
+func add(a int, b int) int {
+	return a + b
+}
+
+func subtraction(a int, b int) int {
+	return a - b
+}
+
+func sample(a int, b int, oreration sample_new_variable) {
+	n := oreration(a, b)
+	myname.Println(n)
+}
+
+func work_with_pointer(a int, b *int) {
+	a++
+	*b++
+	myname.Println(a, *b)
 }
